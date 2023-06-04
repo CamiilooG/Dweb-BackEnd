@@ -14,16 +14,16 @@ export const registerDelivery = async (req, res) => {
     message: `usuario creado satisfactoriamente con email: ${email}`
   })
 }
-export const loginDelivery =async (req, res) =>{
-  const {username, password} = req.body
+export const loginDelivery = async (req, res) => {
+  const { username, password } = req.body
   const consulta = `SELECT * FROM delivery WHERE email="${username}"`
   const [cons] = await pool.query(consulta)
-    const user = cons[0]
-    if (!user || password !== user.password) return res.status(401).json({ message: 'Usuario y/o contraseña incorrecta' })
+  const user = cons[0]
+  if (!user || password !== user.password) return res.status(401).json({ message: 'Usuario y/o contraseña incorrecta' })
 
-    const { name, email } = user
+  const { name, email, iddelivery } = user
 
-    res.status(200).json({ name, email })
+  res.status(200).json({ name, email, iddelivery})
 }
 
 export const deliveryUpdateUsers = async (req, res) => {
