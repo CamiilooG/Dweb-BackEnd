@@ -10,10 +10,10 @@ export const loginUser = async (req, res) => {
     const user = result[0]
     if (!user || password !== user.password) return res.status(401).json({ message: 'Usuario y/o contraseña incorrecta' })
 
-    const { name, location, email } = user
-
-    res.status(200).json({ name, location, email })
+    const { name, location, email, iduser } = user
+    res.status(200).json({ name, location, email, iduser })
 }
+
 export const registerUser = async (req, res) => {
     const { email, name, password, location } = req.body
     const [rows] = await pool.query('INSERT INTO user ( email, name, password, location) VALUES( ?, ?, ?, ?)',
