@@ -48,7 +48,7 @@ export const takePackage = async (req, res) => {
     const queryUpdatePackage = `UPDATE package SET iddelivery = ?, state = ? WHERE idpackage = ${idpackage}`
     const [rows] = await pool.query(queryUpdatePackage, [iddelivery, state])
     console.log(rows)
-    res.json({ message: 'El paquete ha sido entregado' })
+    res.json({ message: 'El paquete esta en transporte' })
 }
 export const deliveryPackage = async (req, res) => {
     const state = 'Entregado'
@@ -57,4 +57,20 @@ export const deliveryPackage = async (req, res) => {
     const [rows] = await pool.query(queryUpdatePackage, [iddelivery, state])
     console.log(rows)
     res.json({ message: 'El paquete ha sido entregado' })
+}
+export const getDeliveredPackages = async (req, res) => {
+    const iddelivery = req.query.iddelivery
+    const queryPackages = `SELECT * from package WHERE iddelivery = ${iddelivery} AND state = 'Entregado'`
+    const [rows] = await pool.query(queryPackages)
+    // esta esperando a que se haga la consulta del nombre de usuario para retornar la info
+    const packages = await Promise.all(rows.map(async (packageElement) => {
+        const { locationFrom, locationTo, state, idpackage, iduser } = packageElement
+        const findUserPackage = `SELECT name FROM user WHERE iduser = '${iduser}'`
+        const [rows] = await pool.query(findUserPackage)
+        // extrae del objeto el nombre
+        const name = rows[0]?.name
+        const info = { locationFrom, locationTo, state, idpackage, name }
+        return info
+    }))
+    res.json(packages)
 }
