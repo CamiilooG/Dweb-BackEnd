@@ -74,3 +74,18 @@ export const getDeliveredPackages = async (req, res) => {
     }))
     res.json(packages)
 }
+export const getPackageById = async (req,res) => {
+    const {iduser} = req.query
+    const queryFindPackageById = `SELECT * FROM package WHERE iduser = ${iduser}`
+    const [rows] = await pool.query(queryFindPackageById)
+    const packages = await (Promise.all(rows.map(async (packageElement) => {
+        const {idpackage, state, locationFrom, locationTo, iduser} = packageElement
+        const findUserPackage = `SELECT * FROM user WHERE iduser =${iduser}`
+        const [rows] = await pool.query(findUserPackage)
+        //extraer el nombre
+        const name = rows[0]?.name
+        const info = {locationFrom, locationTo, state, idpackage, name}
+        return info
+    })))
+    
+}
