@@ -1,4 +1,4 @@
-import{registerPackage, getUnassignedPackages, takePackage, getAssignedPackages, deliveryPackage, getDeliveredPackages, getPackageById} from '../controllers/package.controller.js'
+import{registerPackage, getUnassignedPackages, takePackage, getAssignedPackages, deliveryPackage, getDeliveredPackages, getPackageById, returnInitialState} from '../controllers/package.controller.js'
 import { Router } from 'express'
 const router = Router()
 
@@ -9,4 +9,5 @@ router.get('/getassignedpackages', getAssignedPackages)
 router.put('/deliverypackage', deliveryPackage)
 router.get('/getdeliveredpackages', getDeliveredPackages)
 router.get('/getpackagebyid', getPackageById)
+router.put('/returnpackage', returnInitialState)
 export default router
