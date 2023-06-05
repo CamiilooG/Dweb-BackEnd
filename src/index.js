@@ -5,9 +5,10 @@ import usersRoutes from './routes/users.routes.js'
 import deliveryRoutes from './routes/delivery.routes.js'
 import packageRoutes from './routes/package.routes.js'
 import adminRoutes from './routes/admin.routes.js'
+import { pool } from "./db.js";
 
 const app = express()
-const PORT = 3000
+const PORT = 4000
 
 const domainsList = ['http://127.0.0.1:5500', '*', 'http://localhost:5500']
 
@@ -36,7 +37,9 @@ app.get("/", (req,res) =>{
  
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Server running on:${PORT}`)
+    
 })
+
 

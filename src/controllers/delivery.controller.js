@@ -1,5 +1,5 @@
 import { pool } from '../db.js'
-import sendConfirmationEmail from '../utils/sendEmail.js'
+import sendConfirmationEmail from '../utils/sendEmail.js' 
 
 export const deliveryGetUsers = async (req, res) => {
   const [result] = await pool.query('SELECT "pong" AS result')
