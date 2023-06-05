@@ -4,6 +4,7 @@ import indexRoutes from './routes/index.routes.js'
 import usersRoutes from './routes/users.routes.js'
 import deliveryRoutes from './routes/delivery.routes.js'
 import packageRoutes from './routes/package.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 
 const app = express()
 const PORT = 3000
@@ -26,6 +27,7 @@ app.use(usersRoutes)
 app.use(indexRoutes)
 app.use(deliveryRoutes)
 app.use(packageRoutes)
+app.use(adminRoutes)
 
 
 //from express return a route and return something in this case a text

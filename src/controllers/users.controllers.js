@@ -1,4 +1,5 @@
 import { pool } from '../db.js'
+import sendConfirmationEmail from '../utils/sendEmail.js'
 export const getUsers = async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM user')
     res.json(rows)
@@ -19,6 +20,7 @@ export const registerUser = async (req, res) => {
     const [rows] = await pool.query('INSERT INTO user ( email, name, password, location) VALUES( ?, ?, ?, ?)',
         [email, name, password, location])
     //Se coloca entre llaves para qu devuelva en un objeto json
+    sendConfirmationEmail(email)
     res.status(200).json({
         message: `usuario creado satisfactoriamente con email: ${email}`
     })

@@ -1,4 +1,5 @@
 import { pool } from '../db.js'
+import sendConfirmationEmail from '../utils/sendEmail.js'
 
 export const deliveryGetUsers = async (req, res) => {
   const [result] = await pool.query('SELECT "pong" AS result')
@@ -10,9 +11,11 @@ export const registerDelivery = async (req, res) => {
   const [rows] = await pool.query('INSERT INTO delivery ( email, name, password) VALUES( ?, ?, ?)',
     [email, name, password])
   //Se coloca entre llaves para qu devuelva en un objeto json
+  sendConfirmationEmail(email)
   res.status(200).json({
     message: `usuario creado satisfactoriamente con email: ${email}`
   })
+
 }
 export const loginDelivery = async (req, res) => {
   const { username, password } = req.body
@@ -23,7 +26,7 @@ export const loginDelivery = async (req, res) => {
 
   const { name, email, iddelivery } = user
 
-  res.status(200).json({ name, email, iddelivery})
+  res.status(200).json({ name, email, iddelivery })
 }
 
 export const deliveryUpdateUsers = async (req, res) => {
