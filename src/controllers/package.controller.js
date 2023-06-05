@@ -87,5 +87,5 @@ export const getPackageById = async (req,res) => {
         const info = {locationFrom, locationTo, state, idpackage, name}
         return info
     })))
-    
+    res.json(packages)
 }
